@@ -1,0 +1,24 @@
+{
+  "name": "create-freebox-app",
+  "version": "0.0.1",
+  "description": "Generate an app authentication token to use with a Freebox",
+  "main": "create-freebox-app.js",
+  "author": "Francois Best <francois@francoisbest.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "chalk": "^2.4.1",
+    "dotenv": "^6.0.0"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/babel-node ./create-freebox-app.js",
+    "build": "docker build -t 47ng/create-freebox-app ."
+  }
+}
