@@ -1,6 +1,6 @@
 # create-freebox-app
 
-Creates an API application to use with a Freebox.
+Create an API application to use with a Freebox.
 
 Compatible Freeboxes:
 

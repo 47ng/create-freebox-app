@@ -1,7 +1,7 @@
 {
   "name": "create-freebox-app",
   "version": "0.0.1",
-  "description": "Generate an app authentication token to use with a Freebox",
+  "description": "Create an API application to use with a Freebox",
   "main": "create-freebox-app.js",
   "author": "Francois Best <francois@francoisbest.com>",
   "license": "MIT",
