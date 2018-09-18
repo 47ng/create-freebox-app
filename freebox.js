@@ -1,12 +1,7 @@
 import axios from 'axios'
 import crypto from 'crypto'
 
-export const authorizeApp = async ({
-  freeboxURL,
-  appId,
-  appName,
-  appVersion
-}) => {
+export const authorizeApp = ({ freeboxURL, appId, appName, appVersion }) => {
   const url = `${freeboxURL}/api/v4/login/authorize/`
   const data = {
     app_id: appId,
