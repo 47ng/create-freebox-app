@@ -8,7 +8,7 @@ import {
   solveChallenge,
   login,
   logout
-} from './mockbox'
+} from './freebox'
 
 const createFreeboxApp = async ({ freeboxURL, appId, appName, appVersion }) => {
   let trackId = null
