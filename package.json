@@ -19,6 +19,7 @@
   },
   "scripts": {
     "start": "./node_modules/.bin/babel-node ./create-freebox-app.js",
-    "build": "docker build -t 47ng/create-freebox-app ."
+    "build": "docker build -t 47ng/create-freebox-app .",
+    "deploy": "docker push 47ng/create-freebox-app:latest"
   }
 }
