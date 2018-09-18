@@ -1,23 +1,17 @@
-export const authorizeApp = async ({
-  freeboxURL,
-  appId,
-  appName,
-  appVersion
-}) => new Promise(resolve => resolve({ trackId: 42, appToken: 'apptoken' }))
+export const authorizeApp = ({ freeboxURL, appId, appName, appVersion }) =>
+  Promise.resolve({ trackId: 42, appToken: 'apptoken' }))
 
 // --
 
 let counter = Math.floor(Math.random() * 5)
 
-export const trackAuthorizationProgress = async ({ freeboxURL, trackId }) =>
-  new Promise(resolve =>
-    resolve({ status: counter-- <= 0 ? 'granted' : 'pending' })
-  )
+export const trackAuthorizationProgress = ({ freeboxURL, trackId }) =>
+  Promise.resolve({ status: counter-- <= 0 ? 'granted' : 'pending' })
 
 // --
 
 export const getLoginChallenge = ({ freeboxURL }) =>
-  new Promise(resolve => resolve({ challenge: 'challenge' }))
+  Promise.resolve({ challenge: 'challenge' }))
 
 // --
 
@@ -25,9 +19,8 @@ export const solveChallenge = ({ appToken, challenge }) => 'password'
 
 // --
 
-export const login = async ({ freeboxURL, appId, password }) =>
-  new Promise(resolve =>
-    resolve({
+export const login = ({ freeboxURL, appId, password }) =>
+  Promise.resolve({
       permissions: {
         foo: true,
         bar: false,
@@ -36,3 +29,7 @@ export const login = async ({ freeboxURL, appId, password }) =>
       }
     })
   )
+
+// --
+
+export const logout = ({ freeboxURL, sessionToken }) => Promise.resolve(null)

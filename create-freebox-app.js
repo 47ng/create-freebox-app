@@ -6,12 +6,14 @@ import {
   trackAuthorizationProgress,
   getLoginChallenge,
   solveChallenge,
-  login
+  login,
+  logout
 } from './freebox'
 
 const createFreeboxApp = async ({ freeboxURL, appId, appName, appVersion }) => {
   let trackId = null
   let appToken = null
+  let sessionToken = null
   try {
     console.info(`Sending app authorization request to Freebox at ${freeboxURL} with parameters:
   - App ID:     ${appId}
@@ -60,7 +62,12 @@ const createFreeboxApp = async ({ freeboxURL, appId, appName, appVersion }) => {
   try {
     const { challenge } = await getLoginChallenge({ freeboxURL })
     const password = solveChallenge({ appToken, challenge })
-    const { permissions } = await login({ freeboxURL, appId, password })
+    const { permissions, ...data } = await login({
+      freeboxURL,
+      appId,
+      password
+    })
+    sessionToken = data.sessionToken
     console.log('\nPermissions:')
     Object.keys(permissions).map(p =>
       console.log(
@@ -70,6 +77,12 @@ const createFreeboxApp = async ({ freeboxURL, appId, appName, appVersion }) => {
     console.log(chalk.cyan('App token:') + `\n${appToken}`)
   } catch (error) {
     console.error(error)
+  }
+  // Cleanup
+  try {
+    await logout({ freeboxURL, sessionToken })
+  } catch (error) {
+    console.warn(error)
   }
 }
 

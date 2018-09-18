@@ -72,3 +72,16 @@ export const login = ({ freeboxURL, appId, password }) => {
       permissions
     }))
 }
+
+// --
+
+export const logout = ({ freeboxURL, sessionToken }) => {
+  const url = `${freeboxURL}/api/v4/login/logout`
+  const headers = {
+    'X-Fbx-App-Auth': sessionToken
+  }
+  return axios
+    .post(url, null, { headers })
+    .then(response => response.data)
+    .then(data => (data.success ? null : new Error(data)))
+}
