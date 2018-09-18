@@ -58,7 +58,6 @@ const createFreeboxApp = async ({ freeboxURL, appId, appName, appVersion }) => {
       console.error(error)
     }
   }
-  // console.info('Logging in...')
   try {
     const { challenge } = await getLoginChallenge({ freeboxURL })
     const password = solveChallenge({ appToken, challenge })

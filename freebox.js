@@ -7,24 +7,21 @@ export const authorizeApp = async ({
   appName,
   appVersion
 }) => {
-  try {
-    const url = `${freeboxURL}/api/v4/login/authorize/`
-    const data = {
-      app_id: appId,
-      app_name: appName,
-      app_version: appVersion,
-      device_name: process.env.DEVICE_NAME || 'Docker'
-    }
-    const res = await axios.post(url, data)
-    if (res.data && res.data.success) {
-      const trackId = res.data.result.track_id
-      const appToken = res.data.result.app_token
-      return { freeboxURL, trackId, appToken }
-    }
-  } catch (error) {
-    console.error(error)
-    return null
+  const url = `${freeboxURL}/api/v4/login/authorize/`
+  const data = {
+    app_id: appId,
+    app_name: appName,
+    app_version: appVersion,
+    device_name: process.env.DEVICE_NAME || 'Docker'
   }
+  return axios
+    .post(url, data)
+    .then(response => response.data)
+    .then(data => (data.success ? data.result : new Error(data)))
+    .then(({ track_id, app_token }) => ({
+      trackId: track_id,
+      appToken: app_token
+    }))
 }
 
 // --
