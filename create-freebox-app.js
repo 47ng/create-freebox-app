@@ -1,7 +1,13 @@
 import dotenv from 'dotenv'
 import chalk from 'chalk'
 import { checkEnv, sleep } from './helpers'
-import { authorizeApp, trackAuthorizationProgress, login } from './freebox'
+import {
+  authorizeApp,
+  trackAuthorizationProgress,
+  getLoginChallenge,
+  solveChallenge,
+  login
+} from './freebox'
 
 const createFreeboxApp = async ({ freeboxURL, appId, appName, appVersion }) => {
   let trackId = null
@@ -52,7 +58,9 @@ const createFreeboxApp = async ({ freeboxURL, appId, appName, appVersion }) => {
   }
   // console.info('Logging in...')
   try {
-    const { permissions } = await login({ freeboxURL, appId, appToken })
+    const { challenge } = await getLoginChallenge({ freeboxURL })
+    const password = solveChallenge({ appToken, challenge })
+    const { permissions } = await login({ freeboxURL, appId, password })
     console.log('\nPermissions:')
     Object.keys(permissions).map(p =>
       console.log(

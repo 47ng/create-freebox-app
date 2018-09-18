@@ -16,7 +16,16 @@ export const trackAuthorizationProgress = async ({ freeboxURL, trackId }) =>
 
 // --
 
-export const login = async ({ freeboxURL, appId, appToken }) =>
+export const getLoginChallenge = ({ freeboxURL }) =>
+  new Promise(resolve => resolve({ challenge: 'challenge' }))
+
+// --
+
+export const solveChallenge = ({ appToken, challenge }) => 'password'
+
+// --
+
+export const login = async ({ freeboxURL, appId, password }) =>
   new Promise(resolve =>
     resolve({
       permissions: {

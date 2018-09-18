@@ -29,7 +29,7 @@ export const authorizeApp = async ({
 
 // --
 
-export const trackAuthorizationProgress = async ({ freeboxURL, trackId }) => {
+export const trackAuthorizationProgress = ({ freeboxURL, trackId }) => {
   const url = `${freeboxURL}/api/v4/login/authorize/${trackId}`
   return axios
     .get(url)
@@ -39,33 +39,36 @@ export const trackAuthorizationProgress = async ({ freeboxURL, trackId }) => {
 
 // --
 
-export const login = async ({ freeboxURL, appId, appToken }) => {
+export const getLoginChallenge = ({ freeboxURL }) => {
   const url = `${freeboxURL}/api/v4/login/`
   return axios
     .get(url)
     .then(response => response.data)
     .then(data => (data.success ? data.result : new Error(data)))
-    .then(({ logged_in, challenge }) => {
-      if (logged_in) {
-        console.log('Already logged in')
-        return
-      }
-      const password = crypto
-        .createHmac('sha1', appToken)
-        .update(challenge)
-        .digest('hex')
-      const sessionUrl = `${freeboxURL}/api/v4/login/session`
-      const data = {
-        app_id: appId,
-        password
-      }
-      return axios
-        .post(sessionUrl, data)
-        .then(response => response.data)
-        .then(data => (data.success ? data.result : new Error(data)))
-        .then(({ session_token, permissions }) => ({
-          sessionToken: session_token,
-          permissions
-        }))
-    })
+}
+
+// --
+
+export const solveChallenge = ({ appToken, challenge }) =>
+  crypto
+    .createHmac('sha1', appToken)
+    .update(challenge)
+    .digest('hex')
+
+// --
+
+export const login = ({ freeboxURL, appId, password }) => {
+  const url = `${freeboxURL}/api/v4/login/session`
+  const data = {
+    app_id: appId,
+    password
+  }
+  return axios
+    .post(url, data)
+    .then(response => response.data)
+    .then(data => (data.success ? data.result : new Error(data)))
+    .then(({ session_token, permissions }) => ({
+      sessionToken: session_token,
+      permissions
+    }))
 }
