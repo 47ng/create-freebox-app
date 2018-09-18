@@ -8,7 +8,7 @@ import {
   solveChallenge,
   login,
   logout
-} from './freebox'
+} from './mockbox'
 
 const createFreeboxApp = async ({ freeboxURL, appId, appName, appVersion }) => {
   let trackId = null
@@ -61,11 +61,12 @@ const createFreeboxApp = async ({ freeboxURL, appId, appName, appVersion }) => {
   try {
     const { challenge } = await getLoginChallenge({ freeboxURL })
     const password = solveChallenge({ appToken, challenge })
-    const { permissions, ...data } = await login({
+    const data = await login({
       freeboxURL,
       appId,
       password
     })
+    const permissions = data.permissions
     sessionToken = data.sessionToken
     console.log('\nPermissions:')
     Object.keys(permissions).map(p =>

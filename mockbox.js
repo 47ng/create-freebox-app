@@ -1,5 +1,5 @@
 export const authorizeApp = ({ freeboxURL, appId, appName, appVersion }) =>
-  Promise.resolve({ trackId: 42, appToken: 'apptoken' }))
+  Promise.resolve({ trackId: 42, appToken: 'apptoken' })
 
 // --
 
@@ -11,7 +11,7 @@ export const trackAuthorizationProgress = ({ freeboxURL, trackId }) =>
 // --
 
 export const getLoginChallenge = ({ freeboxURL }) =>
-  Promise.resolve({ challenge: 'challenge' }))
+  Promise.resolve({ challenge: 'challenge' })
 
 // --
 
@@ -21,14 +21,13 @@ export const solveChallenge = ({ appToken, challenge }) => 'password'
 
 export const login = ({ freeboxURL, appId, password }) =>
   Promise.resolve({
-      permissions: {
-        foo: true,
-        bar: false,
-        egg: true,
-        spam: true
-      }
-    })
-  )
+    permissions: {
+      foo: true,
+      bar: false,
+      egg: true,
+      spam: true
+    }
+  })
 
 // --
 
